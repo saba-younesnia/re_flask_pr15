@@ -1,0 +1,41 @@
+select employees.name, employees.family , sum(salaries.salary) from 
+  employees inner join salaries on employees.id=salaries.id
+    group by employees.name, employees.family;
+    
+select MAX(salary) from salaries;
+
+select employees.*, sum(salaries.salary) from employees inner join salaries on employees.id=salaries.id where sum(salaries.salary)=(select MAX(sum(salaries.salary)) from salaries);
+
+SELECT employees.*, SUM(salaries.salary) as total_salary 
+FROM employees 
+INNER JOIN salaries ON employees.id = salaries.id 
+GROUP BY employees.id 
+HAVING total_salary = (SELECT MAX(total_salary) FROM (SELECT SUM(salary) as total_salary FROM salaries GROUP BY id) as max_salary);
+
+SELECT employees.*, SUM(salaries.salary) as total_salary 
+FROM employees 
+INNER JOIN salaries ON employees.id = salaries.id 
+group by employees.id
+having total_salary=(select MAX(total_salary) from (select sum(salary) as total_salary from salaries group by id));
+
+select employees.*, sum(salaries.salary) as total_salary from employees inner join salaries 
+  on employees.id=salaries.id group by employees.id 
+    having total_salary=(select max(total_salary) from (select sum(salary) as total_salary from salaries group by id ));
+
+
+SELECT id, 
+       SUM(salary) AS tsalary 
+FROM salaries 
+GROUP BY id 
+HAVING SUM(salary) = (
+    SELECT MAX(tsalary) 
+    FROM (
+        SELECT SUM(salary) AS tsalary 
+        FROM salaries 
+        GROUP BY id
+    )
+);
+
+select employees.*, sum(salaries.salary)/count(salaries.salary) as avg_salary 
+  from employees inner join salaries on employees.id=salaries.id group by employees.id 
+    having sum(salaries.salary)/count(salaries.salary)=(select max(avg_salary) from (select sum(salary)/count(salary) as avg_salary from salaries group by id));
