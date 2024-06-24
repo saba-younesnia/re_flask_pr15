@@ -1,0 +1,1 @@
+Auf dieser Webseite werden beim Laden der Index-Seite die Namen der Mitarbeiter und deren Gesamtbezüge basierend auf einer Abfrage in der Datenbank angezeigt. Durch Drücken der Schaltfläche „ok“ werden der Name und die Gesamtbezüge der Person mit den höchsten Bezügen angezeigt
